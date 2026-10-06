@@ -1,0 +1,4 @@
+import Link from 'next/link';
+import { Icon } from './icon';
+import { categories, toolPath, type Tool } from '@/tools/registry';
+export function ToolCard({ tool }: { tool: Tool }) { const category = categories.find(c => c.slug === tool.category)!; return <Link className={`tool-card ${tool.status === 'live' ? 'live-card' : ''}`} href={toolPath(tool)}><div className="card-top"><span className={`icon-tile ${category.color}`}><Icon name={tool.icon}/></span><span className={`badge ${tool.status === 'live' ? 'live-badge' : ''}`}>{tool.status === 'live' ? 'Ready to use' : 'Coming next'}</span></div><h3>{tool.question}</h3><p>{tool.description}</p><div className="card-bottom"><span>{category.title}</span><strong>{tool.status === 'live' ? 'Check your job' : 'See what’s planned'} <span aria-hidden="true">↗</span></strong></div></Link>; }

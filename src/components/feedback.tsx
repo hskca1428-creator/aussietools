@@ -1,0 +1,9 @@
+'use client';
+import { useState } from 'react';
+import { MessageSquarePlus } from 'lucide-react';
+export function Feedback() {
+  const [problem, setProblem] = useState(''); const [message, setMessage] = useState(''); const [busy, setBusy] = useState(false);
+  const endpoint = process.env.NEXT_PUBLIC_FEEDBACK_ENDPOINT;
+  async function submit(e: React.FormEvent) { e.preventDefault(); setBusy(true); setMessage(''); try { if (!endpoint) { const text = `AussieTools — tool suggestion\n\n${problem}`; const url = URL.createObjectURL(new Blob([text], { type: 'text/plain' })); const a = document.createElement('a'); a.href = url; a.download = 'aussietools-suggestion.txt'; a.click(); URL.revokeObjectURL(url); setMessage('Suggestion downloaded. It has not been sent to AussieTools.'); } else { const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ problem }) }); if (!response.ok) throw new Error(); setMessage('Thanks — your suggestion has been received.'); setProblem(''); } } catch { setMessage('Could not send your suggestion. Please try again.'); } finally { setBusy(false); } }
+  return <section className="feedback"><MessageSquarePlus size={30}/><div><h2>What should we build next?</h2><p>Tell us about a decision you wish was easier to work out.</p><form onSubmit={submit}><label className="sr-only" htmlFor="problem">Your tool idea</label><textarea id="problem" required minLength={10} maxLength={1500} placeholder="I need a tool to work out whether…" value={problem} onChange={e => setProblem(e.target.value)}/><button className="button" disabled={busy}>{busy ? 'Sending…' : endpoint ? 'Send suggestion' : 'Download suggestion'}</button></form>{!endpoint && <small>Suggestions are saved to a file for now. Online submissions will open at launch.</small>}<p role="status">{message}</p></div></section>;
+}
