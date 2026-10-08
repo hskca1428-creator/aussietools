@@ -1,16 +1,230 @@
-import type { Metadata } from 'next';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import { tools, categories, toolPath } from '@/tools/registry';
-import { JobProfit } from '@/components/job-profit';
-import { Feedback } from '@/components/feedback';
-import { ToolCard } from '@/components/tool-card';
-import { Icon } from '@/components/icon';
-import { siteUrl } from '@/lib/site';
-export function generateStaticParams() { return tools.map(t => ({ category: t.category, slug: t.slug })); }
-async function findTool(params: Promise<{ category: string; slug: string }>) { const { category, slug } = await params; return tools.find(t => t.category === category && t.slug === slug); }
-export async function generateMetadata({ params }: { params: Promise<{ category: string; slug: string }> }): Promise<Metadata> { const tool = await findTool(params); return { title: tool?.title, description: tool?.description, alternates: { canonical: tool ? toolPath(tool) : undefined }, robots: tool?.status === 'planned' ? { index: false, follow: true } : undefined }; }
-export default async function ToolPage({ params }: { params: Promise<{ category: string; slug: string }> }) {
-  const tool = await findTool(params); if (!tool) notFound(); const category = categories.find(c => c.slug === tool.category)!;
-  return <div className="container tool-page"><nav className="breadcrumb" aria-label="Breadcrumb"><Link href="/">All tools</Link><span>/</span><Link href={`/${category.slug}`}>{category.title}</Link><span>/</span><span>{tool.shortTitle}</span></nav><div className="tool-intro"><span className={`icon-tile ${category.color}`}><Icon name={tool.icon}/></span><div><div className="eyebrow green">{tool.title}</div><h1>{tool.question}</h1><p>{tool.status === 'live' ? 'Know your real margin before you quote. Every cost counts.' : tool.description}</p></div></div>{tool.status === 'live' ? <><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebApplication', name: tool.title, url: `${siteUrl}${toolPath(tool)}`, applicationCategory: 'BusinessApplication', operatingSystem: 'Any', offers: { '@type': 'Offer', price: 0, priceCurrency: 'AUD' } }) }}/><JobProfit/><section className="method-section"><div className="section-heading"><div><div className="eyebrow green">NO BLACK BOXES</div><h2>How we work it out.</h2></div><span className="checked-date">Sources checked: 4 October 2026</span></div><div className="method-grid"><div><h3>The formula</h3><p><strong>Job cost</strong> = materials + your labour + employee labour + vehicle travel + other expenses + allocated overhead.</p><p><strong>Profit</strong> = revenue excluding GST − job cost.</p><p><strong>Margin</strong> = profit ÷ revenue × 100.</p><p><strong>Target quote</strong> = job cost ÷ (1 − target margin ÷ 100).</p><p><strong>Profit per owner hour</strong> = profit ÷ your hours. This is surplus after your entered labour cost, not your total hourly pay.</p></div><div><h3>The assumptions</h3><p>All figures are AUD. The GST checkbox removes 10% GST from the quote for fully taxable sales. Costs must exclude recoverable GST; mixed and GST-free supplies need separate treatment.</p><p>The $0.80/km vehicle cost and 30% margin are editable example assumptions. They are not ATO deduction rates or recommended industry margins.</p><p>Your hourly costs should include employment on-costs. Add overhead explicitly; the tool cannot know costs you leave out.</p><h3>Australian sources</h3>{tool.sources.map(s => <p key={s.url}><a href={s.url} target="_blank" rel="noreferrer">{s.title} ↗</a><small className="source-note">{s.note}</small></p>)}</div></div></section><section className="faq-section"><h2>A few good questions.</h2><details><summary>Is margin the same as markup?</summary><p>No. Margin divides profit by revenue; markup divides profit by cost. A $1,000 cost with a 30% margin needs a quote of about $1,429, rather than $1,300.</p></details><details><summary>Have you included my wage in the cost?</summary><p>Yes. Your hours multiplied by your hourly cost are included before job profit is calculated. Enter an hourly cost that pays you fairly for your time.</p></details><details><summary>Does this calculate my tax?</summary><p>No. The profit estimate is before income tax. GST treatment is simplified and does not calculate your BAS or tax liability.</p></details></section><Link href="/guides/how-to-calculate-job-profit" className="guide-link"><span><small>THE PRACTICAL GUIDE</small><strong>How to calculate job profit before you quote</strong></span><span aria-hidden="true">↗</span></Link></> : <section className="planned-panel"><span className="badge">On the roadmap</span><h2>A real decision deserves a proper tool.</h2><p>We’re building this after the Job Profit Calculator. It is not available yet — help shape it by describing what you need below.</p><Link className="button" href="/business/job-profit-calculator">Try the Job Profit Calculator</Link></section>}<section className="related-section"><h2>Keep working it out.</h2><div className="tool-grid related-grid">{tool.relatedTools.map(slug => tools.find(t => t.slug === slug)).filter(t => !!t).map(t => <ToolCard tool={t!} key={t!.slug}/>)}</div></section><Feedback/></div>;
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { tools, categories, toolPath } from "@/tools/registry";
+import { TradeToolkit } from "@/components/trade-toolkit";
+import { JobProfit } from "@/components/job-profit";
+import { Newsletter } from "@/components/newsletter";
+import { Feedback } from "@/components/feedback";
+import { ToolCard } from "@/components/tool-card";
+import { Icon } from "@/components/icon";
+import { siteUrl } from "@/lib/site";
+export function generateStaticParams() {
+  return tools.map((t) => ({ category: t.category, slug: t.slug }));
+}
+async function findTool(params: Promise<{ category: string; slug: string }>) {
+  const { category, slug } = await params;
+  return tools.find((t) => t.category === category && t.slug === slug);
+}
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ category: string; slug: string }>;
+}): Promise<Metadata> {
+  const tool = await findTool(params);
+  return {
+    title: tool?.title,
+    description: tool?.description,
+    alternates: { canonical: tool ? toolPath(tool) : undefined },
+    robots:
+      tool?.status === "planned" ? { index: false, follow: true } : undefined,
+  };
+}
+export default async function ToolPage({
+  params,
+}: {
+  params: Promise<{ category: string; slug: string }>;
+}) {
+  const tool = await findTool(params);
+  if (!tool) notFound();
+  const category = categories.find((c) => c.slug === tool.category)!;
+  return (
+    <div className="container tool-page">
+      <nav className="breadcrumb" aria-label="Breadcrumb">
+        <Link href="/">All tools</Link>
+        <span>/</span>
+        <Link href={`/${category.slug}`}>{category.title}</Link>
+        <span>/</span>
+        <span>{tool.shortTitle}</span>
+      </nav>
+      <div className="tool-intro">
+        <span className={`icon-tile ${category.color}`}>
+          <Icon name={tool.icon} />
+        </span>
+        <div>
+          <div className="eyebrow green">{tool.title}</div>
+          <h1>{tool.question}</h1>
+          <p>
+            {tool.slug === "trade-toolkit"
+              ? "A practical workspace for your next job. Price it, put it in writing and keep things moving."
+              : tool.status === "live"
+                ? "Know your real margin before you quote. Every cost counts."
+                : tool.description}
+          </p>
+        </div>
+      </div>
+      {tool.status === "live" ? (
+        <>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "WebApplication",
+                name: tool.title,
+                url: `${siteUrl}${toolPath(tool)}`,
+                applicationCategory: "BusinessApplication",
+                operatingSystem: "Any",
+                offers: { "@type": "Offer", price: 0, priceCurrency: "AUD" },
+              }),
+            }}
+          />
+          <>
+            {tool.slug === "trade-toolkit" ? (
+              <TradeToolkit />
+            ) : (
+              <>
+                <Link
+                  href="/business/trade-toolkit"
+                  className="toolkit-discovery"
+                >
+                  <strong>From job profit to a quote.</strong>
+                  <span>
+                    Try the Trade Toolkit: quotes, invoices, scope and client
+                    emails.
+                  </span>
+                </Link>
+                <JobProfit />
+              </>
+            )}
+          </>
+          <section className="method-section">
+            <div className="section-heading">
+              <div>
+                <div className="eyebrow green">NO BLACK BOXES</div>
+                <h2>How we work it out.</h2>
+              </div>
+              <span className="checked-date">
+                Sources checked:{" "}
+                {tool.slug === "trade-toolkit"
+                  ? "8 October 2026"
+                  : "4 October 2026"}
+              </span>
+            </div>
+            <div className="method-grid">
+              <div>
+                <h3>The formula</h3>
+                <p>
+                  <strong>Job cost</strong> = materials + your labour + employee
+                  labour + vehicle travel + other expenses + allocated overhead.
+                </p>
+                <p>
+                  <strong>Profit</strong> = revenue excluding GST − job cost.
+                </p>
+                <p>
+                  <strong>Margin</strong> = profit ÷ revenue × 100.
+                </p>
+                <p>
+                  <strong>Target quote</strong> = job cost ÷ (1 − target margin
+                  ÷ 100).
+                </p>
+                <p>
+                  <strong>Profit per owner hour</strong> = profit ÷ your hours.
+                  This is surplus after your entered labour cost, not your total
+                  hourly pay.
+                </p>
+              </div>
+              <div>
+                <h3>The assumptions</h3>
+                <p>
+                  All figures are AUD. The GST checkbox removes 10% GST from the
+                  quote for fully taxable sales. Costs must exclude recoverable
+                  GST; mixed and GST-free supplies need separate treatment.
+                </p>
+                <p>
+                  The $0.80/km vehicle cost and 30% margin are editable example
+                  assumptions. They are not ATO deduction rates or recommended
+                  industry margins.
+                </p>
+                <p>
+                  Your hourly costs should include employment on-costs. Add
+                  overhead explicitly; the tool cannot know costs you leave out.
+                </p>
+                <h3>Australian sources</h3>
+                {tool.sources.map((s) => (
+                  <p key={s.url}>
+                    <a href={s.url} target="_blank" rel="noreferrer">
+                      {s.title} ↗
+                    </a>
+                    <small className="source-note">{s.note}</small>
+                  </p>
+                ))}
+              </div>
+            </div>
+          </section>
+          <section className="faq-section">
+            <h2>A few good questions.</h2>
+            <details>
+              <summary>Is margin the same as markup?</summary>
+              <p>
+                No. Margin divides profit by revenue; markup divides profit by
+                cost. A $1,000 cost with a 30% margin needs a quote of about
+                $1,429, rather than $1,300.
+              </p>
+            </details>
+            <details>
+              <summary>Have you included my wage in the cost?</summary>
+              <p>
+                Yes. Your hours multiplied by your hourly cost are included
+                before job profit is calculated. Enter an hourly cost that pays
+                you fairly for your time.
+              </p>
+            </details>
+            <details>
+              <summary>Does this calculate my tax?</summary>
+              <p>
+                No. The profit estimate is before income tax. GST treatment is
+                simplified and does not calculate your BAS or tax liability.
+              </p>
+            </details>
+          </section>
+          <Link
+            href="/guides/how-to-calculate-job-profit"
+            className="guide-link"
+          >
+            <span>
+              <small>THE PRACTICAL GUIDE</small>
+              <strong>How to calculate job profit before you quote</strong>
+            </span>
+            <span aria-hidden="true">↗</span>
+          </Link>
+        </>
+      ) : (
+        <section className="planned-panel">
+          <span className="badge">On the roadmap</span>
+          <h2>A real decision deserves a proper tool.</h2>
+          <p>
+            We’re building this after the Job Profit Calculator. It is not
+            available yet — help shape it by describing what you need below.
+          </p>
+          <Link className="button" href="/business/job-profit-calculator">
+            Try the Job Profit Calculator
+          </Link>
+        </section>
+      )}
+      <section className="related-section">
+        <h2>Keep working it out.</h2>
+        <div className="tool-grid related-grid">
+          {tool.relatedTools
+            .map((slug) => tools.find((t) => t.slug === slug))
+            .filter((t) => !!t)
+            .map((t) => (
+              <ToolCard tool={t!} key={t!.slug} />
+            ))}
+        </div>
+      </section>
+      <Newsletter />
+      <Feedback />
+    </div>
+  );
 }

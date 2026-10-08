@@ -1,20 +1,330 @@
-'use client';
-import { useState } from 'react';
-import { Check, Copy, RotateCcw, Share2, ShieldCheck, Info } from 'lucide-react';
-import { defaultJob, calculateJobProfit, type JobProfitInput } from '@/calculators/job-profit';
-import { money, percent } from '@/lib/site';
-import { trackEvent } from '@/lib/events';
-type NumericKey = { [K in keyof JobProfitInput]: JobProfitInput[K] extends number ? K : never }[keyof JobProfitInput];
-export function JobProfit() {
-  const [values, setValues] = useState<Record<NumericKey, string>>(() => Object.fromEntries(Object.entries(defaultJob).filter(([, v]) => typeof v === 'number').map(([k, v]) => [k, String(v)])) as Record<NumericKey, string>);
-  const [gst, setGst] = useState(false); const [notice, setNotice] = useState('');
-  const input = { ...Object.fromEntries(Object.entries(values).map(([k, v]) => [k, Number(v)])), quoteIncludesGst: gst } as JobProfitInput;
-  const invalid = Object.values(values).some(v => v.trim() === '' || !Number.isFinite(Number(v)) || Number(v) < 0 || Number(v) > 1e9) || input.targetMargin >= 100;
+"use client";
+import { useState } from "react";
+import {
+  Check,
+  Copy,
+  RotateCcw,
+  Share2,
+  ShieldCheck,
+  Info,
+} from "lucide-react";
+import {
+  defaultJob,
+  calculateJobProfit,
+  type JobProfitInput,
+} from "@/calculators/job-profit";
+import { money, percent } from "@/lib/site";
+import { trackEvent } from "@/lib/events";
+type NumericKey = {
+  [K in keyof JobProfitInput]: JobProfitInput[K] extends number ? K : never;
+}[keyof JobProfitInput];
+export function JobProfit({
+  onPrepareQuote,
+}: { onPrepareQuote?: (amount: number) => void } = {}) {
+  const [values, setValues] = useState<Record<NumericKey, string>>(
+    () =>
+      Object.fromEntries(
+        Object.entries(defaultJob)
+          .filter(([, v]) => typeof v === "number")
+          .map(([k, v]) => [k, String(v)]),
+      ) as Record<NumericKey, string>,
+  );
+  const [gst, setGst] = useState(false);
+  const [notice, setNotice] = useState("");
+  const input = {
+    ...Object.fromEntries(
+      Object.entries(values).map(([k, v]) => [k, Number(v)]),
+    ),
+    quoteIncludesGst: gst,
+  } as JobProfitInput;
+  const invalid =
+    Object.values(values).some(
+      (v) =>
+        v.trim() === "" ||
+        !Number.isFinite(Number(v)) ||
+        Number(v) < 0 ||
+        Number(v) > 1e9,
+    ) || input.targetMargin >= 100;
   const result = invalid ? null : calculateJobProfit(input);
-  const field = (key: NumericKey, label: string, unit: string, help?: string) => <label className="number-field" key={key} htmlFor={key}><span>{label}</span><div className="input-wrap">{unit === '$' && <span className="input-prefix">$</span>}<input id={key} type="number" min="0" max={key === 'targetMargin' ? '99.9' : '1000000000'} step={key === 'targetMargin' || key === 'vehicleRate' ? '0.1' : 'any'} inputMode="decimal" value={values[key]} onChange={e => { setValues({ ...values, [key]: e.target.value }); setNotice(''); }} aria-describedby={help ? `${key}-help` : undefined}/>{unit !== '$' && <span className="input-suffix">{unit}</span>}</div>{help && <small id={`${key}-help`}>{help}</small>}</label>;
-  const summary = result ? `AussieTools — Job profit estimate\nRevenue (ex GST): ${money(result.revenue)}\nEstimated job cost: ${money(result.cost)}\nJob profit: ${money(result.profit)}\nMargin: ${percent(result.margin)}\nTarget margin: ${input.targetMargin}%\nMinimum quote (ex GST): ${money(result.minimumQuote)}\nIncludes owner labour cost. Estimate only.\n${typeof window !== 'undefined' ? window.location.href : ''}` : '';
-  async function copy() { try { await navigator.clipboard.writeText(summary); setNotice('Result copied.'); trackEvent('result_copied', { tool: 'job-profit' }); } catch { setNotice('Copy is unavailable in this browser. Select the figures to copy them.'); } }
-  async function share() { try { if (navigator.share) { await navigator.share({ title: 'My job profit estimate', text: summary }); setNotice('Result shared.'); } else await copy(); trackEvent('result_shared', { tool: 'job-profit' }); } catch (e) { if ((e as Error).name !== 'AbortError') setNotice('Could not share the result. Try copying it instead.'); } }
-  const reset = () => { setValues(Object.fromEntries(Object.entries(defaultJob).filter(([, v]) => typeof v === 'number').map(([k, v]) => [k, String(v)])) as Record<NumericKey, string>); setGst(false); setNotice('Example restored.'); };
-  return <div className="calculator-grid"><section className="input-panel"><div className="panel-title"><span className="step-number">01</span><div><h2>Your job numbers</h2><p>Start with the example, or make it yours.</p></div></div><div className="input-section"><h3>The quote</h3>{field('quote', 'Your quoted price', '$')}<label className="checkbox-label"><input type="checkbox" checked={gst} onChange={e => setGst(e.target.checked)}/>This quote includes 10% GST</label><p className="field-note">Enter costs below excluding any GST you can claim back. Include GST in costs where it is not recoverable.</p></div><div className="input-section"><h3>Materials & labour</h3>{field('materials', 'Materials', '$')}<div className="field-pair">{field('ownHours', 'Your hours', 'hrs')}{field('ownRate', 'Your hourly cost', '$')}</div><div className="field-pair">{field('employeeHours', 'Employee / apprentice hours', 'hrs')}{field('employeeRate', 'Employee hourly cost', '$')}</div><p className="field-note">Use fully loaded hourly costs, including relevant super, leave and employment costs. Include travel time in hours.</p></div><div className="input-section"><h3>Travel & other costs</h3><div className="field-pair">{field('distance', 'Return travel distance', 'km')}{field('vehicleRate', 'Vehicle cost per km', '$')}</div>{field('otherExpenses', 'Other job expenses', '$')}{field('overhead', 'Allocated business overhead', '$', 'Your share of insurance, software, admin and other fixed costs.')}</div><div className="input-section"><h3>Your profit goal</h3>{field('targetMargin', 'Target profit margin', '%', 'A planning goal you choose, not an industry benchmark.')}</div><div className="private-note"><ShieldCheck size={17}/>Your figures stay in this browser. No account needed.</div></section><div className="result-column"><section className="result-panel" aria-label="Job profit results"><div className="result-heading"><span className="step-number yellow">02</span><span>THE REAL PICTURE</span><span className="live-label">Updates as you type</span></div>{!result ? <div className="invalid-result" role="status"><Info/><h2>Check your numbers</h2><p>Fill every field with a number from 0 to 1 billion. Target margin must be below 100%.</p></div> : <><div className="profit-label">Estimated job profit</div><div className="profit-amount">{money(result.profit)}</div><p className="profit-caption">After materials, labour, travel and allocated costs.</p><div className="result-metrics"><div><span>Profit margin</span><strong>{percent(result.margin)}</strong></div><div><span>Profit per owner hour</span><strong>{result.effectiveRate === null ? '—' : money(result.effectiveRate)}</strong></div></div><div className={`job-status ${result.status === 'on-target' ? 'good' : 'caution'}`}><Check size={19}/><div><strong>{result.status === 'on-target' ? 'Your quote meets your target' : result.status === 'loss' ? 'This quote would make a loss' : result.status === 'no-revenue' ? 'Add a quote to see your margin' : 'Profitable, but below your target'}</strong><span>{result.status === 'on-target' ? `You’re above your ${input.targetMargin}% margin goal.` : `Your target is ${input.targetMargin}%. Review your costs or quote.`}</span></div></div><div className="cost-breakdown"><h3>Where the money goes</h3>{[['Revenue (ex GST)', result.revenue], ['Materials', input.materials], ['Your labour', result.ownLabour], ['Employee labour', result.employeeLabour], ['Vehicle travel', result.travel], ['Other expenses', input.otherExpenses], ['Allocated overhead', input.overhead]].map(([label, amount]) => <div key={String(label)}><span>{label}</span><strong>{money(Number(amount))}</strong></div>)}<div className="breakdown-total"><span>Total job cost</span><strong>{money(result.cost)}</strong></div></div><div className="quote-target"><span>Quote for your {input.targetMargin}% target margin</span><strong>{money(result.minimumQuote)} <small>ex GST</small></strong><p>{money(result.minimumQuoteIncGst)} including 10% GST, if applicable.</p></div></>}</section>{result && <section className="scenario-panel"><div className="eyebrow green">GIVE YOUR QUOTE A STRESS TEST</div><h3>What if the job takes longer?</h3>{field('extraHours', 'Extra hours of your time', 'hrs')}<p>Your margin would move from <strong>{percent(result.margin)}</strong> to <strong>{percent(result.stressedMargin)}</strong>, leaving <strong>{money(result.stressedProfit)}</strong> job profit.</p><small>Assumes extra owner labour only, at {money(input.ownRate)}/hour.</small></section>}<div className="result-actions"><button onClick={copy} disabled={!result}><Copy size={17}/>Copy result</button><button onClick={share} disabled={!result}><Share2 size={17}/>Share</button><button onClick={reset}><RotateCcw size={17}/>Start again</button></div><p className="action-notice" role="status">{notice}</p><p className="estimate-note">An estimate to help you quote. This is before income tax and does not guarantee the final profitability of a job.</p></div></div>;
+  const field = (
+    key: NumericKey,
+    label: string,
+    unit: string,
+    help?: string,
+  ) => (
+    <label className="number-field" key={key} htmlFor={key}>
+      <span>{label}</span>
+      <div className="input-wrap">
+        {unit === "$" && <span className="input-prefix">$</span>}
+        <input
+          id={key}
+          type="number"
+          min="0"
+          max={key === "targetMargin" ? "99.9" : "1000000000"}
+          step={key === "targetMargin" || key === "vehicleRate" ? "0.1" : "any"}
+          inputMode="decimal"
+          value={values[key]}
+          onChange={(e) => {
+            setValues({ ...values, [key]: e.target.value });
+            setNotice("");
+          }}
+          aria-describedby={help ? `${key}-help` : undefined}
+        />
+        {unit !== "$" && <span className="input-suffix">{unit}</span>}
+      </div>
+      {help && <small id={`${key}-help`}>{help}</small>}
+    </label>
+  );
+  const summary = result
+    ? `AussieTools — Job profit estimate\nRevenue (ex GST): ${money(result.revenue)}\nEstimated job cost: ${money(result.cost)}\nJob profit: ${money(result.profit)}\nMargin: ${percent(result.margin)}\nTarget margin: ${input.targetMargin}%\nMinimum quote (ex GST): ${money(result.minimumQuote)}\nIncludes owner labour cost. Estimate only.\n${typeof window !== "undefined" ? window.location.href : ""}`
+    : "";
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(summary);
+      setNotice("Result copied.");
+      trackEvent("result_copied", { tool: "job-profit" });
+    } catch {
+      setNotice(
+        "Copy is unavailable in this browser. Select the figures to copy them.",
+      );
+    }
+  }
+  async function share() {
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: "My job profit estimate",
+          text: summary,
+        });
+        setNotice("Result shared.");
+      } else await copy();
+      trackEvent("result_shared", { tool: "job-profit" });
+    } catch (e) {
+      if ((e as Error).name !== "AbortError")
+        setNotice("Could not share the result. Try copying it instead.");
+    }
+  }
+  const reset = () => {
+    setValues(
+      Object.fromEntries(
+        Object.entries(defaultJob)
+          .filter(([, v]) => typeof v === "number")
+          .map(([k, v]) => [k, String(v)]),
+      ) as Record<NumericKey, string>,
+    );
+    setGst(false);
+    setNotice("Example restored.");
+  };
+  return (
+    <div className="calculator-grid">
+      <section className="input-panel">
+        <div className="panel-title">
+          <span className="step-number">01</span>
+          <div>
+            <h2>Your job numbers</h2>
+            <p>Start with the example, or make it yours.</p>
+          </div>
+        </div>
+        <div className="input-section">
+          <h3>The quote</h3>
+          {field("quote", "Your quoted price", "$")}
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              checked={gst}
+              onChange={(e) => setGst(e.target.checked)}
+            />
+            This quote includes 10% GST
+          </label>
+          <p className="field-note">
+            Enter costs below excluding any GST you can claim back. Include GST
+            in costs where it is not recoverable.
+          </p>
+        </div>
+        <div className="input-section">
+          <h3>Materials & labour</h3>
+          {field("materials", "Materials", "$")}
+          <div className="field-pair">
+            {field("ownHours", "Your hours", "hrs")}
+            {field("ownRate", "Your labour cost per hour", "$")}
+          </div>
+          <div className="field-pair">
+            {field("employeeHours", "Employee / apprentice hours", "hrs")}
+            {field("employeeRate", "Employee hourly cost", "$")}
+          </div>
+          <p className="field-note">
+            Enter what labour costs you, not the hourly rate you charge a
+            client. Include relevant super, leave and employment costs. Count
+            travel time in hours.
+          </p>
+        </div>
+        <div className="input-section">
+          <h3>Travel & other costs</h3>
+          <div className="field-pair">
+            {field("distance", "Return travel distance", "km")}
+            {field("vehicleRate", "Vehicle cost per km", "$")}
+          </div>
+          {field("otherExpenses", "Other job expenses", "$")}
+          {field(
+            "overhead",
+            "Allocated business overhead",
+            "$",
+            "Your share of insurance, software, admin and other fixed costs.",
+          )}
+        </div>
+        <div className="input-section">
+          <h3>Your profit goal</h3>
+          {field(
+            "targetMargin",
+            "Target profit margin",
+            "%",
+            "A planning goal you choose, not an industry benchmark.",
+          )}
+        </div>
+        <div className="private-note">
+          <ShieldCheck size={17} />
+          Your figures stay in this browser. No account needed.
+        </div>
+      </section>
+      <div className="result-column">
+        <section className="result-panel" aria-label="Job profit results">
+          <div className="result-heading">
+            <span className="step-number yellow">02</span>
+            <span>THE REAL PICTURE</span>
+            <span className="live-label">Updates as you type</span>
+          </div>
+          {!result ? (
+            <div className="invalid-result" role="status">
+              <Info />
+              <h2>Check your numbers</h2>
+              <p>
+                Fill every field with a number from 0 to 1 billion. Target
+                margin must be below 100%.
+              </p>
+            </div>
+          ) : (
+            <>
+              <div className="profit-label">Estimated job profit</div>
+              <div className="profit-amount">{money(result.profit)}</div>
+              <p className="profit-caption">
+                After materials, labour, travel and allocated costs.
+              </p>
+              <div className="result-metrics">
+                <div>
+                  <span>Profit margin</span>
+                  <strong>{percent(result.margin)}</strong>
+                </div>
+                <div>
+                  <span>Profit per owner hour</span>
+                  <strong>
+                    {result.effectiveRate === null
+                      ? "—"
+                      : money(result.effectiveRate)}
+                  </strong>
+                </div>
+              </div>
+              <div
+                className={`job-status ${result.status === "on-target" ? "good" : "caution"}`}
+              >
+                <Check size={19} />
+                <div>
+                  <strong>
+                    {result.status === "on-target"
+                      ? "Your quote meets your target"
+                      : result.status === "loss"
+                        ? "This quote would make a loss"
+                        : result.status === "no-revenue"
+                          ? "Add a quote to see your margin"
+                          : "Profitable, but below your target"}
+                  </strong>
+                  <span>
+                    {result.status === "on-target"
+                      ? `You’re above your ${input.targetMargin}% margin goal.`
+                      : `Your target is ${input.targetMargin}%. Review your costs or quote.`}
+                  </span>
+                </div>
+              </div>
+              <div className="cost-breakdown">
+                <h3>Where the money goes</h3>
+                {[
+                  ["Revenue (ex GST)", result.revenue],
+                  ["Materials", input.materials],
+                  ["Your labour", result.ownLabour],
+                  ["Employee labour", result.employeeLabour],
+                  ["Vehicle travel", result.travel],
+                  ["Other expenses", input.otherExpenses],
+                  ["Allocated overhead", input.overhead],
+                ].map(([label, amount]) => (
+                  <div key={String(label)}>
+                    <span>{label}</span>
+                    <strong>{money(Number(amount))}</strong>
+                  </div>
+                ))}
+                <div className="breakdown-total">
+                  <span>Total job cost</span>
+                  <strong>{money(result.cost)}</strong>
+                </div>
+              </div>
+              <div className="quote-target">
+                <span>Quote for your {input.targetMargin}% target margin</span>
+                <strong>
+                  {money(result.minimumQuote)} <small>ex GST</small>
+                </strong>
+                <p>
+                  {money(result.minimumQuoteIncGst)} including 10% GST, if
+                  applicable.
+                </p>
+              </div>
+            </>
+          )}
+        </section>
+        {result && (
+          <section className="scenario-panel">
+            <div className="eyebrow green">GIVE YOUR QUOTE A STRESS TEST</div>
+            <h3>What if the job takes longer?</h3>
+            {field("extraHours", "Extra hours of your time", "hrs")}
+            <p>
+              Your margin would move from{" "}
+              <strong>{percent(result.margin)}</strong> to{" "}
+              <strong>{percent(result.stressedMargin)}</strong>, leaving{" "}
+              <strong>{money(result.stressedProfit)}</strong> job profit.
+            </p>
+            <small>
+              Assumes extra owner labour only, at {money(input.ownRate)}/hour.
+            </small>
+          </section>
+        )}
+        <div className="result-actions">
+          {onPrepareQuote && (
+            <button
+              className="prepare-quote"
+              disabled={!result}
+              onClick={() => result && onPrepareQuote(result.minimumQuote)}
+            >
+              Build a quote at your target margin
+            </button>
+          )}
+          <button onClick={copy} disabled={!result}>
+            <Copy size={17} />
+            Copy result
+          </button>
+          <button onClick={share} disabled={!result}>
+            <Share2 size={17} />
+            Share
+          </button>
+          <button onClick={reset}>
+            <RotateCcw size={17} />
+            Start again
+          </button>
+        </div>
+        <p className="action-notice" role="status">
+          {notice}
+        </p>
+        <p className="estimate-note">
+          An estimate to help you quote. This is before income tax and does not
+          guarantee the final profitability of a job.
+        </p>
+      </div>
+    </div>
+  );
 }

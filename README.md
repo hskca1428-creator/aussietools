@@ -1,4 +1,4 @@
-# AussieTools v0.1
+# AussieTools v0.2
 
 Practical tools for real Australian decisions. Next.js App Router, TypeScript, Tailwind CSS, a metadata-driven tool registry and browser-only calculations.
 
@@ -12,6 +12,14 @@ npm run dev
 ```
 
 Open http://localhost:3000. Validation: `npm test`, `npm run typecheck`, `npm run build`.
+
+## New in v0.2
+
+- Trade Toolkit at `/business/trade-toolkit`: six accessible tabs for profit, quote, invoice, scope, client email templates and quick calculators.
+- Target-margin quote handoff; private profit/cost breakdown is excluded from client documents.
+- Browser-only quote/invoice line items, cent-rounded GST and printable A4 document views. Complete documents before export; GST documents require a checksum-valid ABN. Mixed supplies are excluded from the simplified GST mode.
+- Hosted newsletter integration: set `NEXT_PUBLIC_NEWSLETTER_URL` to your provider form URL and redeploy. No signup CTA is shown before it is configured.
+- Social bios, seven posts, demo script, welcome email and owner setup checklist in `docs/social-email-launch-kit.md`.
 
 ## Included
 
@@ -31,7 +39,7 @@ The blueprint example is illustrative and does not reconcile mathematically. Wit
 
 ## GitHub → Vercel
 
-Create a private GitHub repository named `aussietools`, push this project and import it into Vercel with the Next.js preset. Use a preview first. Set `NEXT_PUBLIC_SITE_URL` to the verified deployment domain; use `https://aussietools.au` once DNS is connected. Vercel installs via the committed lockfile and builds with `npm run build`.
+The existing GitHub repository is `hskca1428-creator/aussietools`, connected to the deployed Vercel project. Push verified changes through this repository. Use a preview first. Set `NEXT_PUBLIC_SITE_URL` to the verified deployment domain; use `https://aussietools.au` once DNS is connected. Vercel installs via the committed lockfile and builds with `npm run build`.
 
 ## Before public launch
 
