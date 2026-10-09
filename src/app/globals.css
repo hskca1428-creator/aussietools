@@ -1964,7 +1964,7 @@ p {
   margin-top: 10px;
   max-width: 660px;
 }
-.newsletter-section a {
+.newsletter-section .button {
   background: var(--yellow);
   color: var(--green);
 }
@@ -2123,3 +2123,12 @@ p {
     margin-left: auto;
   }
 }
+
+.newsletter-form { width: 100%; max-width: 420px; flex-shrink: 0; display: grid; gap: 14px; }
+.newsletter-form label { display: grid; gap: 7px; font-size: .9rem; font-weight: 600; }
+.newsletter-form input { width: 100%; min-width: 0; border: 1px solid #b7ccbc; border-radius: 6px; background: white; color: var(--green); padding: 12px; font: inherit; }
+.newsletter-form input:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+.newsletter-form .button { width: 100%; border: 0; cursor: pointer; }
+.newsletter-form .newsletter-notice { font-size: .8rem; line-height: 1.6; margin-top: 0; }
+.newsletter-notice a { color: white; text-decoration: underline; }
+@media (max-width: 700px) { .newsletter-form { max-width: none; } .newsletter-section { padding: 24px; } }

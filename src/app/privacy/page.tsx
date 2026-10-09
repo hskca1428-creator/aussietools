@@ -9,7 +9,7 @@ export default function Privacy() {
     <article className="container prose-page">
       <div className="eyebrow green">YOUR NUMBERS STAY YOURS</div>
       <h1>Privacy</h1>
-      <p>Last updated: 8 October 2026.</p>
+      <p>Last updated: 9 October 2026.</p>
       <h2>Calculations</h2>
       <p>
         Your calculator inputs are processed in your browser. We do not send
@@ -25,10 +25,7 @@ export default function Privacy() {
       </p>
       <h2>Email updates</h2>
       <p>
-        If an email signup link is shown, it opens a hosted form operated by our
-        selected email list provider. Submitting that form shares the details
-        you enter with that provider for AussieTools updates. Review the form
-        notice before subscribing. Using a calculator does not subscribe you.
+        Aussie Tools uses AWeber to manage email updates. Submitting our form sends your name and email address directly to AWeber for subscription processing and delivery of new tool announcements and practical tips. Using a calculator does not subscribe you. Unsubscribe through the link in each marketing email. Subscriber information is managed in AWeber; contact us to request access, correction or deletion. AWeber may process information overseas under its <a href="https://www.aweber.com/privacy.htm" target="_blank" rel="noreferrer">privacy policy</a>.
       </p>
       <h2>Sharing and suggestions</h2>
       <p>
@@ -53,12 +50,7 @@ export default function Privacy() {
         Australian source links open third-party websites with their own privacy
         practices.
       </p>
-      <h2>Before public launch</h2>
-      <p>
-        The site operator must add their identity, privacy contact and
-        applicable retention details before enabling online feedback or
-        publishing this service commercially.
-      </p>
+      <h2>Contact Aussie Tools</h2><p>This website is operated by Aussie Tools. For privacy questions or subscriber data requests, email <a href="mailto:support@aussietools.au">support@aussietools.au</a>. Newsletter messages use updates@aussietools.au.</p>
     </article>
   );
 }

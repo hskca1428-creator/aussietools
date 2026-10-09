@@ -117,26 +117,22 @@ Publish only after a live, tested signup and unsubscribe flow exists.
 
 ## Domain email
 
-Suggested public address: **hello@aussietools.au**. Optional alias: **support@aussietools.au**, both delivered to the same inbox. A separate **updates@aussietools.au** sender is useful for the newsletter, but not essential at the start.
+Public support: **support@aussietools.au**, hosted by Hostinger. Newsletter sender alias: **updates@aussietools.au**. Operator: **Aussie Tools**. No additional aliases are needed.
 
-Mailbox hosting and an email marketing list are separate services. Follow the mailbox provider's MX/SPF/DKIM instructions while preserving Vercel's website records. Authenticate the marketing sender with the list provider's records. Avoid duplicate SPF TXT records; use the provider's guidance to combine authorised senders.
+## Email list — AWeber
 
-## Email list — recommended starting setup
+Existing subscription: AWeber. List: awlist6979248. Form: 972346216. Tracking label: Aussie_Tools_Updates.
 
-If no existing preference, use **Brevo** with a hosted double opt-in signup form. This avoids storing subscriber data in our application and works with a single configured URL. Its free plan currently advertises 300 sends/day; check current limits before choosing a plan. No paid subscription is needed for the initial test.
+The website uses our styled name/email form with the supplied POST endpoint and confirmation redirect. Signup data goes directly to AWeber. Calculator inputs are separate. No display pixel or script is loaded.
 
-1. Create the owner-controlled account using the domain email.
-2. Create list: “AussieTools updates”.
-3. Set sender name: AussieTools. Sender: hello@aussietools.au or updates@aussietools.au.
-4. Authenticate the sending domain using provider instructions.
-5. Create a hosted signup form collecting email only; first name optional. Use explicit consent, double opt-in and bot protection.
-6. Consent copy: “Email me AussieTools updates, new tools and practical Australian tips. I can unsubscribe at any time.” Link to the site's privacy notice.
-7. Provide the actual operator identity, contact and any address the provider requires in the email footer.
-8. In Vercel set `NEXT_PUBLIC_NEWSLETTER_URL` to the verified HTTPS signup URL, then redeploy. The prepared site component appears on the homepage and tool pages only when this is configured.
-9. Test with your own address: signup, confirmation, welcome message, unsubscribe. Confirm no subscription before confirmation and no further marketing after unsubscribe.
-10. Add confirmed social links to the site only once those profiles exist.
+1. Set sender name Aussie Tools, sender updates@aussietools.au and reply-to support@aussietools.au.
+2. Verify the sender and authenticate the domain using AWeber DNS instructions, preserving Hostinger MX and Vercel website records. Avoid duplicate SPF records.
+3. Keep confirmed opt-in enabled in AWeber; HTML alone does not prove that account setting.
+4. Configure the welcome email below in AWeber, with its unsubscribe link and required postal address.
+5. Test with an address you control: subscribe, receive/click confirmation, receive welcome, unsubscribe. Check subscriber status and suppression in AWeber. This inbox/account test has not been completed by the site integration.
+6. Add social links after profiles exist.
 
-Australian commercial email needs consent, sender identification and a working unsubscribe mechanism. Double opt-in is our recommended operational practice, not a claim that Australian law mandates that particular method. Do not purchase lists or automatically add people who use a calculator.
+Australian commercial email needs consent, sender identification and a working unsubscribe mechanism. Double opt-in is recommended. Do not purchase lists or subscribe calculator users automatically.
 
 ## Welcome email draft
 
@@ -153,7 +149,8 @@ Subject: A little clarity — welcome to AussieTools
 > What should we build next? Reply with one decision you would like help working out.
 >
 > AussieTools
-> [Operator identity and contact details]
+> Aussie Tools — support@aussietools.au
+> [Required postal address in AWeber settings]
 > [Provider-managed unsubscribe link]
 
 ## First-month measures
@@ -163,15 +160,13 @@ Track useful tool visits, completed confirmed subscriptions, replies, repeat use
 ## Reference sources
 
 - Toolkit reviewed: https://aussiework.au/trade-business-toolkit/
-- Brevo plans: https://help.brevo.com/hc/en-us/articles/208589409-About-Brevo-s-pricing-plans
-- Brevo forms: https://help.brevo.com/hc/en-us/sections/202171729
+- AWeber custom forms: https://docs.aweber.com/sign-up-forms/faq-signup-forms/can-i-use-my-own-form
 - Australian email rules: https://www.acma.gov.au/avoid-sending-spam
 - Facebook Page usernames: https://www.facebook.com/help/1671339099618123/
 - YouTube handles: https://support.google.com/youtube/answer/11585688
 
-## What the owner needs to supply
+## Remaining owner setup
 
-- Confirmed domain email and preferred email list provider.
-- Actual operator/business identity and privacy contact.
-- Hosted signup form URL after it is created.
-- Confirmed social profile handles/links. Drafts above are ready to adapt.
+- Verify/authenticate updates sender and complete the required postal address in AWeber.
+- Complete confirmation, welcome and unsubscribe inbox test.
+- Supply confirmed social handles/links.

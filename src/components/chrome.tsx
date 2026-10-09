@@ -88,6 +88,7 @@ export function Footer() {
         </div>
         <div className="footer-links">
           <Link href="/about">About</Link>
+          <a href="mailto:support@aussietools.au">Contact</a>
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>
           <Link href="/disclaimer">Disclaimer</Link>

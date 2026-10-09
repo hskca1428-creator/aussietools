@@ -18,7 +18,7 @@ Open http://localhost:3000. Validation: `npm test`, `npm run typecheck`, `npm ru
 - Trade Toolkit at `/business/trade-toolkit`: six accessible tabs for profit, quote, invoice, scope, client email templates and quick calculators.
 - Target-margin quote handoff; private profit/cost breakdown is excluded from client documents.
 - Browser-only quote/invoice line items, cent-rounded GST and printable A4 document views. Complete documents before export; GST documents require a checksum-valid ABN. Mixed supplies are excluded from the simplified GST mode.
-- Hosted newsletter integration: set `NEXT_PUBLIC_NEWSLETTER_URL` to your provider form URL and redeploy. No signup CTA is shown before it is configured.
+- AWeber signup: the styled native form posts name/email directly to list awlist6979248, form 972346216. The supplied confirmation redirect is retained. No display pixel or third-party script is loaded. Owner must verify sender authentication and the confirmation/welcome/unsubscribe flow.
 - Social bios, seven posts, demo script, welcome email and owner setup checklist in `docs/social-email-launch-kit.md`.
 
 ## Included
