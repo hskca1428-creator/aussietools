@@ -1,4 +1,9 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
-export const metadata: Metadata = { title: 'Practical guides', alternates: { canonical: '/guides' } };
+import { pageMetadata } from '@/lib/seo';
+export const metadata = pageMetadata({
+  title: 'Practical guides',
+  description:
+    'Plain-English guides to help you make sense of your results, starting with how to calculate job profit before you quote.',
+  path: '/guides',
+});
 export default function Guides() { return <div className="container prose-page"><div className="eyebrow green">UNDERSTAND THE NUMBERS</div><h1>A little knowledge goes a long way.</h1><p>Plain-English guides to help you make sense of your results.</p><Link className="article-card" href="/guides/how-to-calculate-job-profit"><h2>How to calculate job profit before you quote</h2><p>Labour, overhead, margin and the costs that are easy to miss.</p></Link></div>; }

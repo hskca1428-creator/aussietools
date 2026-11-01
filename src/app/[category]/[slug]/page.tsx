@@ -8,7 +8,9 @@ import { Newsletter } from "@/components/newsletter";
 import { Feedback } from "@/components/feedback";
 import { ToolCard } from "@/components/tool-card";
 import { Icon } from "@/components/icon";
-import { siteUrl } from "@/lib/site";
+import { JsonLd } from "@/components/json-ld";
+import { pageMetadata } from "@/lib/seo";
+import { absoluteUrl } from "@/lib/site";
 export function generateStaticParams() {
   return tools.map((t) => ({ category: t.category, slug: t.slug }));
 }
@@ -22,13 +24,13 @@ export async function generateMetadata({
   params: Promise<{ category: string; slug: string }>;
 }): Promise<Metadata> {
   const tool = await findTool(params);
-  return {
-    title: tool?.title,
-    description: tool?.description,
-    alternates: { canonical: tool ? toolPath(tool) : undefined },
-    robots:
-      tool?.status === "planned" ? { index: false, follow: true } : undefined,
-  };
+  if (!tool) return { title: "Tool" };
+  return pageMetadata({
+    title: tool.title,
+    description: tool.description,
+    path: toolPath(tool),
+    noIndex: tool.status === "planned",
+  });
 }
 export default async function ToolPage({
   params,
@@ -65,18 +67,18 @@ export default async function ToolPage({
       </div>
       {tool.status === "live" ? (
         <>
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "WebApplication",
-                name: tool.title,
-                url: `${siteUrl}${toolPath(tool)}`,
-                applicationCategory: "BusinessApplication",
-                operatingSystem: "Any",
-                offers: { "@type": "Offer", price: 0, priceCurrency: "AUD" },
-              }),
+          <JsonLd
+            data={{
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              name: tool.title,
+              description: tool.description,
+              url: absoluteUrl(toolPath(tool)),
+              applicationCategory: "BusinessApplication",
+              operatingSystem: "Web",
+              offers: { "@type": "Offer", price: 0, priceCurrency: "AUD" },
+              isAccessibleForFree: true,
+              inLanguage: "en-AU",
             }}
           />
           <>

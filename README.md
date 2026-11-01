@@ -39,7 +39,7 @@ The blueprint example is illustrative and does not reconcile mathematically. Wit
 
 ## GitHub → Vercel
 
-The existing GitHub repository is `hskca1428-creator/aussietools`, connected to the deployed Vercel project. Push verified changes through this repository. Use a preview first. Set `NEXT_PUBLIC_SITE_URL` to the verified deployment domain; use `https://aussietools.au` once DNS is connected. Vercel installs via the committed lockfile and builds with `npm run build`.
+The existing GitHub repository is `hskca1428-creator/aussietools`, connected to the deployed Vercel project. Push verified changes through this repository. Use a preview first. Set `NEXT_PUBLIC_SITE_URL` to `https://www.aussietools.au`, the primary domain. The apex redirects there, and an apex value is rewritten to www so canonicals, the sitemap and robots.txt stay on one host. Leave it unset in production to use that default. Preview deployments can set their own origin. Vercel installs via the committed lockfile and builds with `npm run build`.
 
 ## Before public launch
 

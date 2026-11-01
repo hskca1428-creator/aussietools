@@ -1,9 +1,11 @@
-import type { Metadata } from "next";
 import Link from "next/link";
-export const metadata: Metadata = {
+import { pageMetadata } from "@/lib/seo";
+export const metadata = pageMetadata({
   title: "Our approach",
-  alternates: { canonical: "/about" },
-};
+  description:
+    "How AussieTools builds simple, transparent tools for Australian decisions. Live tools show the formula and sources, and your figures stay in the browser.",
+  path: "/about",
+});
 export default function About() {
   return (
     <article className="container prose-page">
