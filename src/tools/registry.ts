@@ -98,7 +98,8 @@ export const tools: Tool[] = [
     featured: true,
     keywords: ["tradie", "quote", "margin", "profit", "pricing"],
     relatedTools: ["employee-true-cost"],
-    lastUpdated: australianBusinessData.checkedOn,
+    // Calculator and tool page revised 8 October 2026. Source check date stays on australianBusinessData.checkedOn.
+    lastUpdated: "2026-10-08",
     sources: australianBusinessData.sources,
   },
   {

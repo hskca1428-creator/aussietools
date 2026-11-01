@@ -8,7 +8,7 @@ Display name: **AussieTools**
 
 Try **@AussieToolsAU** consistently. If unavailable, try **@UseAussieTools**. Avoid changing the spelling between platforms.
 
-Website: https://aussietools.au
+Website: https://www.aussietools.au
 
 Short bio:
 
@@ -45,7 +45,7 @@ Use the toolkit link only after the new release is verified live. Otherwise use 
 >
 > AussieTools is built to make everyday Australian decisions easier. Start with your materials, time, travel and expenses. See the margin before you lock in the quote.
 >
-> Try it with a recent job: https://aussietools.au/business/job-profit-calculator
+> Try it with a recent job: https://www.aussietools.au/business/job-profit-calculator
 >
 > What is the cost you most often forget to include?
 
@@ -83,7 +83,7 @@ Visual: two prices side by side with the formulas. Caption: illustrative example
 >
 > The AussieTools Trade Toolkit brings job profit, quote and invoice documents, scope planning and client email drafts into one free workspace.
 >
-> https://aussietools.au/business/trade-toolkit
+> https://www.aussietools.au/business/trade-toolkit
 
 Publish only after release. Visual: three actual screenshots, with fictional business/client details.
 
@@ -142,7 +142,7 @@ Subject: A little clarity — welcome to AussieTools
 >
 > We build practical tools for real Australian decisions, with the formulas and assumptions shown.
 >
-> Start with the Job Profit Calculator: https://aussietools.au/business/job-profit-calculator
+> Start with the Job Profit Calculator: https://www.aussietools.au/business/job-profit-calculator
 >
 > Try a recent job and see what is left after materials, labour, travel and expenses. Then ask what happens if it takes longer.
 >

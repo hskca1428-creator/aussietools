@@ -1,8 +1,10 @@
-import type { Metadata } from "next";
-export const metadata: Metadata = {
+import { pageMetadata } from "@/lib/seo";
+export const metadata = pageMetadata({
   title: "Privacy",
-  alternates: { canonical: "/privacy" },
-};
+  description:
+    "How AussieTools handles calculator inputs, trade documents, email updates and analytics. Calculations stay in your browser.",
+  path: "/privacy",
+});
 export default function Privacy() {
   const enabled = process.env.NEXT_PUBLIC_ENABLE_ANALYTICS === "true";
   return (
