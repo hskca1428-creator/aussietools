@@ -110,11 +110,11 @@ export const tools: Tool[] = [
     description: "Compare pay, commuting costs and the time you get back.",
     category: "work",
     icon: "briefcase",
-    status: "planned",
+    status: "live",
     featured: true,
     keywords: ["salary", "career", "commute"],
     relatedTools: ["fifo-comparison"],
-    lastUpdated: "",
+    lastUpdated: "2026-11-15",
     sources: [],
   },
   {

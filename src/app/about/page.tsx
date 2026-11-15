@@ -22,9 +22,9 @@ export default function About() {
       </p>
       <h2>A useful place to start.</h2>
       <p>
-        The Job Profit Calculator and Trade Business Toolkit are ready to use.
+        The Job Profit Calculator, Trade Business Toolkit and Job Comparison tool are ready to use.
         Check a job, prepare a quote or invoice, define your scope and draft a
-        client email. Nine more tools are planned across Money, Work, Business &
+        client email. Eight more tools are planned across Money, Work, Business &
         Tradies, Home, Cars & Travel, and Caravan & Camping.
       </p>
       <h2>Show the working.</h2>

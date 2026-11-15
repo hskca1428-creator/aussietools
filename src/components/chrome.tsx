@@ -89,6 +89,7 @@ export function Footer() {
         <div className="footer-links">
           <Link href="/about">About</Link>
           <a href="mailto:support@aussietools.au">Contact</a>
+          <a href="https://www.facebook.com/people/AussieTools/61595328029109/" target="_blank" rel="noreferrer">Facebook ↗</a>
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>
           <Link href="/disclaimer">Disclaimer</Link>
@@ -96,7 +97,7 @@ export function Footer() {
       </div>
       <div className="container footer-bottom">
         <span>Built for Australian life.</span>
-        <span>© {new Date().getFullYear()} AussieTools · v0.2</span>
+        <span>© {new Date().getFullYear()} AussieTools · v0.3</span>
       </div>
     </footer>
   );

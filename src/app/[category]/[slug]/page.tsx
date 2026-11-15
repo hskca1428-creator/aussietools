@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { tools, categories, toolPath } from "@/tools/registry";
 import { TradeToolkit } from "@/components/trade-toolkit";
+import { JobComparison } from "@/components/job-comparison";
 import { JobProfit } from "@/components/job-profit";
 import { Newsletter } from "@/components/newsletter";
 import { Feedback } from "@/components/feedback";
@@ -57,7 +58,9 @@ export default async function ToolPage({
           <div className="eyebrow green">{tool.title}</div>
           <h1>{tool.question}</h1>
           <p>
-            {tool.slug === "trade-toolkit"
+            {tool.slug === "job-comparison"
+              ? tool.description
+              : tool.slug === "trade-toolkit"
               ? "A practical workspace for your next job. Price it, put it in writing and keep things moving."
               : tool.status === "live"
                 ? "Know your real margin before you quote. Every cost counts."
@@ -81,7 +84,7 @@ export default async function ToolPage({
               inLanguage: "en-AU",
             }}
           />
-          <>
+          {tool.slug === "job-comparison" ? <JobComparison /> : <>
             {tool.slug === "trade-toolkit" ? (
               <TradeToolkit />
             ) : (
@@ -99,7 +102,6 @@ export default async function ToolPage({
                 <JobProfit />
               </>
             )}
-          </>
           <section className="method-section">
             <div className="section-heading">
               <div>
@@ -200,6 +202,7 @@ export default async function ToolPage({
             </span>
             <span aria-hidden="true">↗</span>
           </Link>
+          </>}
         </>
       ) : (
         <section className="planned-panel">

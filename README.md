@@ -50,3 +50,7 @@ The existing GitHub repository is `hskca1428-creator/aussietools`, connected to 
 - Run Lighthouse against a production deployment; 90+ is a target, not a measured claim.
 
 Accounts, database, AI, affiliates and paid features are intentionally deferred to later milestones.
+
+## Job Comparison (v0.3)
+
+`/work/job-comparison` compares entered annual take-home pay after annualised work costs and time. Salary/super are shown separately; income tax and HELP are not estimated. Working weeks apply to costs and hours; weekly results divide annual amounts by 52. Figures stay in browser memory; copied summaries omit individual pay/cost figures. The verified Facebook Page is linked in the footer.

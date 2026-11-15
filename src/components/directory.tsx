@@ -170,7 +170,7 @@ export function Directory({
               <div>
                 <strong>Starting small. Making every tool count.</strong>
                 <p>
-                  Job Profit and the Trade Toolkit are ready. Nine more
+                  Job Profit, the Trade Toolkit and Job Comparison are ready. Eight more
                   practical tools are on the way.
                 </p>
               </div>
