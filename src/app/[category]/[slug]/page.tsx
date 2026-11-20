@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { tools, categories, toolPath } from "@/tools/registry";
 import { TradeToolkit } from "@/components/trade-toolkit";
+import { EmployeeCost } from "@/components/employee-cost";
 import { JobComparison } from "@/components/job-comparison";
 import { JobProfit } from "@/components/job-profit";
 import { Newsletter } from "@/components/newsletter";
@@ -58,7 +59,7 @@ export default async function ToolPage({
           <div className="eyebrow green">{tool.title}</div>
           <h1>{tool.question}</h1>
           <p>
-            {tool.slug === "job-comparison"
+            {(tool.slug === "job-comparison" || tool.slug === "employee-true-cost")
               ? tool.description
               : tool.slug === "trade-toolkit"
               ? "A practical workspace for your next job. Price it, put it in writing and keep things moving."
@@ -84,7 +85,7 @@ export default async function ToolPage({
               inLanguage: "en-AU",
             }}
           />
-          {tool.slug === "job-comparison" ? <JobComparison /> : <>
+          {tool.slug === "employee-true-cost" ? <EmployeeCost /> : tool.slug === "job-comparison" ? <JobComparison /> : <>
             {tool.slug === "trade-toolkit" ? (
               <TradeToolkit />
             ) : (

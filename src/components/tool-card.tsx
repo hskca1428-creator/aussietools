@@ -24,7 +24,7 @@ export function ToolCard({ tool }: { tool: Tool }) {
           {tool.status === "live"
             ? tool.slug === "trade-toolkit"
               ? "Open toolkit"
-              : tool.slug === "job-comparison" ? "Compare jobs" : "Check your job"
+              : tool.slug === "job-comparison" ? "Compare jobs" : tool.slug === "employee-true-cost" ? "Budget a hire" : "Check your job"
             : "See what’s planned"}{" "}
           <span aria-hidden="true">↗</span>
         </strong>

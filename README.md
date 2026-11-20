@@ -54,3 +54,11 @@ Accounts, database, AI, affiliates and paid features are intentionally deferred 
 ## Job Comparison (v0.3)
 
 `/work/job-comparison` compares entered annual take-home pay after annualised work costs and time. Salary/super are shown separately; income tax and HELP are not estimated. Working weeks apply to costs and hours; weekly results divide annual amounts by 52. Figures stay in browser memory; copied summaries omit individual pay/cost figures. The verified Facebook Page is linked in the footer.
+
+## Employee True Cost (v0.4)
+
+`/business/employee-true-cost` budgets permanent full/part-time employment over 52 weeks. Wages include ordinary paid leave once; leave and training reduce productive hours. Editable 2026–27 general SG 12% and annual earnings cap $270,830, leave loading, productive time, annual employer-specific costs and first-year recruitment. No casual/overtime/award compliance model. Official ATO and Fair Work sources are displayed, checked 20 November 2026.
+
+## Employee True Cost (v0.4)
+
+`/business/employee-true-cost` budgets permanent employment using hourly or annual base pay, editable 2026–27 SG settings and annual employer costs. Paid leave reduces productive hours without adding ordinary leave pay twice. Optional scenario B, first-year recruitment, salary/hourly reconciliation and invalid-input handling are tested. Statutory sources are in `src/data/australia/employment.ts`; current defaults were checked 20 November 2026. Casual, overtime and entitlement calculations are outside this version.

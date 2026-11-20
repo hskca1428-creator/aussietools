@@ -1,3 +1,4 @@
+import { employmentSources } from "@/data/australia/employment";
 import { australianBusinessData } from "@/data/australia/business";
 export const categories = [
   {
@@ -126,12 +127,12 @@ export const tools: Tool[] = [
       "Look beyond salary to the full cost of another pair of hands.",
     category: "business",
     icon: "users",
-    status: "planned",
-    featured: false,
+    status: "live",
+    featured: true,
     keywords: ["super", "staff", "salary"],
     relatedTools: ["job-profit-calculator"],
-    lastUpdated: "",
-    sources: [],
+    lastUpdated: "2026-11-20",
+    sources: employmentSources,
   },
   {
     slug: "fifo-comparison",

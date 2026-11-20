@@ -97,7 +97,7 @@ export function Footer() {
       </div>
       <div className="container footer-bottom">
         <span>Built for Australian life.</span>
-        <span>© {new Date().getFullYear()} AussieTools · v0.3</span>
+        <span>© {new Date().getFullYear()} AussieTools · v0.4</span>
       </div>
     </footer>
   );
