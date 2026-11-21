@@ -1,0 +1,8 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {energyPlan,energyExamples as examples} from '../src/calculators/energy';
+const settings={rate:35,supply:110,period:30};
+test('watts convert to kWh and seasonal days are respected',()=>{const r=energyPlan([examples[0]],settings);assert.equal(r.currentKwh,720);assert.equal(r.plannedKwh,360);assert.equal(r.currentUsage,252);assert.equal(r.saving,126)});
+test('annual label and quantities bypass operating schedules',()=>{const r=energyPlan([{...examples[1],quantity:2,hours:99}],settings);assert.equal(r.currentKwh,800);assert.equal(r.currentUsage,280)});
+test('fixed supply is unchanged and period is annualised',()=>{const r=energyPlan(examples,settings);assert.ok(Math.abs(r.currentTotal-r.plannedTotal-r.saving)<1e-8);assert.equal(r.currentPeriod,r.currentTotal*30/365);assert.equal(r.supplyAnnual,401.50000000000006)});
+test('ranking and worse scenarios work without clamping',()=>{const r=energyPlan([{...examples[0],plannedHours:5},examples[1]],settings);assert.equal(r.ranked[0].id,'heater');assert.ok(r.saving<0)});
+test('zero rate and empty appliance list are supported',()=>{assert.equal(energyPlan(examples,{...settings,rate:0}).saving,0);const r=energyPlan([],settings);assert.equal(r.currentTotal,r.supplyAnnual)});
+test('invalid rates, schedules and quantities fail',()=>{for(const patch of [{hours:25},{days:366},{quantity:0},{quantity:1.5},{watts:NaN},{plannedHours:-1},{name:''}])assert.throws(()=>energyPlan([{...examples[0],...patch}],settings));for(const patch of [{rate:-1},{supply:NaN},{period:0},{period:367}])assert.throws(()=>energyPlan(examples,{...settings,...patch}))});

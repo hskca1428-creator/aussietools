@@ -170,7 +170,7 @@ export function Directory({
               <div>
                 <strong>Starting small. Making every tool count.</strong>
                 <p>
-                  Job Profit, Trade Toolkit, Job Comparison and Employee True Cost are ready. Seven more
+                  Five useful tools are ready, including the new Household Energy Detective. Six more
                   practical tools are on the way.
                 </p>
               </div>

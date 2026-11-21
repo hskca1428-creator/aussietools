@@ -62,3 +62,7 @@ Accounts, database, AI, affiliates and paid features are intentionally deferred 
 ## Employee True Cost (v0.4)
 
 `/business/employee-true-cost` budgets permanent employment using hourly or annual base pay, editable 2026–27 SG settings and annual employer costs. Paid leave reduces productive hours without adding ordinary leave pay twice. Optional scenario B, first-year recruitment, salary/hourly reconciliation and invalid-input handling are tested. Statutory sources are in `src/data/australia/employment.ts`; current defaults were checked 20 November 2026. Casual, overtime and entitlement calculations are outside this version.
+
+## Household Energy Detective (v0.5)
+
+`/home/energy-detective` models a list of appliances using input watts/schedules or annual kWh. Quantity, seasonal operating days and current/what-if usage are editable. One flat cents/kWh rate applies; daily supply stays fixed. Totals include only listed appliances and supply, not a bill prediction. Annual period averages use 365 days. Solar/TOU/demand/gas and replacement costs are not modelled. Government formula sources checked 21 November 2026.

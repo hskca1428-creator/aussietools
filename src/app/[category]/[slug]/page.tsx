@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { tools, categories, toolPath } from "@/tools/registry";
 import { TradeToolkit } from "@/components/trade-toolkit";
+import { EnergyDetective } from "@/components/energy-detective";
 import { EmployeeCost } from "@/components/employee-cost";
 import { JobComparison } from "@/components/job-comparison";
 import { JobProfit } from "@/components/job-profit";
@@ -59,7 +60,7 @@ export default async function ToolPage({
           <div className="eyebrow green">{tool.title}</div>
           <h1>{tool.question}</h1>
           <p>
-            {(tool.slug === "job-comparison" || tool.slug === "employee-true-cost")
+            {(tool.slug === "job-comparison" || tool.slug === "employee-true-cost" || tool.slug === "energy-detective")
               ? tool.description
               : tool.slug === "trade-toolkit"
               ? "A practical workspace for your next job. Price it, put it in writing and keep things moving."
@@ -78,14 +79,14 @@ export default async function ToolPage({
               name: tool.title,
               description: tool.description,
               url: absoluteUrl(toolPath(tool)),
-              applicationCategory: "BusinessApplication",
+              applicationCategory: tool.slug === "energy-detective" ? "UtilitiesApplication" : "BusinessApplication",
               operatingSystem: "Web",
               offers: { "@type": "Offer", price: 0, priceCurrency: "AUD" },
               isAccessibleForFree: true,
               inLanguage: "en-AU",
             }}
           />
-          {tool.slug === "employee-true-cost" ? <EmployeeCost /> : tool.slug === "job-comparison" ? <JobComparison /> : <>
+          {tool.slug === "energy-detective" ? <EnergyDetective /> : tool.slug === "employee-true-cost" ? <EmployeeCost /> : tool.slug === "job-comparison" ? <JobComparison /> : <>
             {tool.slug === "trade-toolkit" ? (
               <TradeToolkit />
             ) : (

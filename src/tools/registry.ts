@@ -1,3 +1,4 @@
+import { energySources } from "@/data/australia/energy";
 import { employmentSources } from "@/data/australia/employment";
 import { australianBusinessData } from "@/data/australia/business";
 export const categories = [
@@ -157,12 +158,12 @@ export const tools: Tool[] = [
     description: "Find the biggest electricity costs hiding around your home.",
     category: "home",
     icon: "zap",
-    status: "planned",
+    status: "live",
     featured: true,
     keywords: ["electricity", "power", "appliance"],
     relatedTools: ["rent-affordability"],
-    lastUpdated: "",
-    sources: [],
+    lastUpdated: "2026-11-21",
+    sources: energySources,
   },
   {
     slug: "rent-affordability",
