@@ -22,9 +22,9 @@ export default function About() {
       </p>
       <h2>A useful place to start.</h2>
       <p>
-        Job Profit, Trade Business Toolkit, Job Comparison, Employee True Cost and Household Energy Detective are ready to use.
+        Job Profit, Trade Business Toolkit, Job Comparison, Employee True Cost, Household Energy Detective and Caravan Load Planner are ready to use.
         Check a job, prepare a quote or invoice, define your scope and draft a
-        client email. Six more tools are planned across Money, Work, Business &
+        client email. Five more tools are planned across Money, Work, Business &
         Tradies, Home, Cars & Travel, and Caravan & Camping.
       </p>
       <h2>Show the working.</h2>

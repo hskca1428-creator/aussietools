@@ -1,3 +1,4 @@
+import { caravanSources } from "@/data/australia/caravan";
 import { energySources } from "@/data/australia/energy";
 import { employmentSources } from "@/data/australia/employment";
 import { australianBusinessData } from "@/data/australia/business";
@@ -203,12 +204,12 @@ export const tools: Tool[] = [
     description: "Plan your packing and see how much payload remains.",
     category: "caravan-camping",
     icon: "tent",
-    status: "planned",
+    status: "live",
     featured: true,
     keywords: ["payload", "weight", "towing"],
     relatedTools: ["road-trip-cost"],
-    lastUpdated: "",
-    sources: [],
+    lastUpdated: "2026-11-22",
+    sources: caravanSources,
   },
   {
     slug: "renovation-materials",

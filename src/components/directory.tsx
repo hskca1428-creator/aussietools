@@ -170,7 +170,7 @@ export function Directory({
               <div>
                 <strong>Starting small. Making every tool count.</strong>
                 <p>
-                  Five useful tools are ready, including the new Household Energy Detective. Six more
+                  Six useful tools are ready, including the new Caravan Load Planner. Five more
                   practical tools are on the way.
                 </p>
               </div>

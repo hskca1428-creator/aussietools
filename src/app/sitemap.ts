@@ -11,8 +11,8 @@ import { categories, tools, toolPath } from "@/tools/registry";
  * Live tools use `tool.lastUpdated`.
  */
 const staticLastModified: Record<string, string> = {
-  "/": "2026-11-21",
-  "/about": "2026-11-21",
+  "/": "2026-11-22",
+  "/about": "2026-11-22",
   "/guides": "2026-10-06",
   "/guides/how-to-calculate-job-profit": "2026-10-06",
   "/privacy": "2026-10-09",
@@ -36,7 +36,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return {
       url: absoluteUrl(path),
       lastModified:
-        tool?.lastUpdated || staticLastModified[path] || (path === "/home" ? "2026-11-21" : path === "/business" ? "2026-11-20" : path === "/work" ? "2026-11-15" : "2026-10-08"),
+        tool?.lastUpdated || staticLastModified[path] || (path === "/caravan-camping" ? "2026-11-22" : path === "/home" ? "2026-11-21" : path === "/business" ? "2026-11-20" : path === "/work" ? "2026-11-15" : "2026-10-08"),
       changeFrequency: "monthly",
       priority: path === "/" ? 1 : 0.7,
     };

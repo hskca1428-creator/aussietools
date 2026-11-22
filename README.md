@@ -66,3 +66,7 @@ Accounts, database, AI, affiliates and paid features are intentionally deferred 
 ## Household Energy Detective (v0.5)
 
 `/home/energy-detective` models a list of appliances using input watts/schedules or annual kWh. Quantity, seasonal operating days and current/what-if usage are editable. One flat cents/kWh rate applies; daily supply stays fixed. Totals include only listed appliances and supply, not a bill prediction. Annual period averages use 365 days. Solar/TOU/demand/gas and replacement costs are not modelled. Government formula sources checked 21 November 2026.
+
+## Caravan Load Planner (v0.6)
+
+`/caravan-camping/caravan-load` adds packing items and water beyond a plate-tare or measured baseline, compares current/what-if quantities against an entered ATM up to 4,500kg, and shows a separate optional planning reserve. It is not towing approval and does not calculate GTM, towball mass, axle/tyre limits or tow-vehicle GVM/GCM. Download and clipboard exports are browser-only. Government sources checked 22 November 2026.
