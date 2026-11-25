@@ -189,11 +189,11 @@ export const tools: Tool[] = [
     description: "Add up fuel, accommodation, food and everything in between.",
     category: "cars-travel",
     icon: "car",
-    status: "planned",
+    status: "live",
     featured: false,
     keywords: ["fuel", "holiday", "travel"],
     relatedTools: ["caravan-load"],
-    lastUpdated: "",
+    lastUpdated: "2026-11-25",
     sources: [],
   },
   {
