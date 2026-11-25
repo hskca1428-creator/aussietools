@@ -170,8 +170,7 @@ export function Directory({
               <div>
                 <strong>Starting small. Making every tool count.</strong>
                 <p>
-                  Six useful tools are ready, including the new Caravan Load Planner. Five more
-                  practical tools are on the way.
+                  Explore tools for work, home and travel, including the Road Trip True Cost calculator.
                 </p>
               </div>
               <Link href="/about">Meet AussieTools</Link>
