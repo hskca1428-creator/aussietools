@@ -217,14 +217,14 @@ export const tools: Tool[] = [
     shortTitle: "Renovation materials",
     question: "How much flooring should you buy?",
     description:
-      "Work out materials, waste and costs before you hit the shops.",
+      "Estimate flooring packs, waste allowance and materials cost for one or more rooms.",
     category: "home",
     icon: "ruler",
-    status: "planned",
+    status: "live",
     featured: false,
     keywords: ["flooring", "packs", "renovation"],
     relatedTools: ["job-profit-calculator"],
-    lastUpdated: "",
+    lastUpdated: "2026-11-26",
     sources: [],
   },
   {

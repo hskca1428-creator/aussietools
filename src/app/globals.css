@@ -2213,3 +2213,14 @@ p {
 .caravan-caution { border-left: 3px solid #bd9f33; padding: 15px; background: #fff8da; }
 @media(max-width:950px){.caravan-item{grid-template-columns:1fr 1fr;}.caravan-item .employee-select{grid-column:1 / -1;}}
 @media(max-width:600px){.caravan-start-grid{grid-template-columns:1fr;}.caravan-item{padding:18px;gap:14px;}}
+
+.flooring-rooms {
+  display: grid;
+  gap: 14px;
+  justify-items: start;
+  min-width: 0;
+}
+
+.flooring-rooms .comparison-card {
+  width: 100%;
+}
