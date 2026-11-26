@@ -170,7 +170,7 @@ export function Directory({
               <div>
                 <strong>Starting small. Making every tool count.</strong>
                 <p>
-                  Explore tools for work, home and travel, including the Road Trip True Cost calculator.
+                  Explore tools for work, home and travel, including the Renovation Project Calculator.
                 </p>
               </div>
               <Link href="/about">Meet AussieTools</Link>
